@@ -1,0 +1,79 @@
+/* home.css (works with the MUI version too) */
+
+/* Section 1 */
+.hero {
+  background: var(--color-ternary);
+  color: var(--color-text);
+  width: 100% !important;
+  padding-top: 90px;
+  padding-bottom: 90px;
+}
+
+.hero .wrapper{
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.hero__imageWrap {
+  border-radius: 40px !important;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.hero__image {
+  width: 100%;
+  height: 320px;
+  object-fit: cover;
+  display: block;
+}
+
+.hero__title {
+  font-weight: 800;
+  line-height: 1.1;
+}
+
+.hero__text {
+  line-height: 1.7;
+  opacity: 0.85;
+  margin-bottom: 14px;
+}
+
+/* MUI buttons (since MUI injects styles, use !important for overrides) */
+.btnPrimary {
+  background: var(--button-color) !important;
+  color: var(--button-text-color) !important;
+  border-radius: 12px !important;
+  text-transform: none !important;
+  font-weight: 700 !important;
+}
+
+.btnGhost {
+  border-color: rgba(0, 0, 0, 0.35) !important;
+  color: #000 !important;
+  border-radius: 12px !important;
+  text-transform: none !important;
+  font-weight: 700 !important;
+}
+
+/* Section 2 */
+.centerBlock {
+  padding: 90px 18px;
+  background: #f2f3f2;
+  color: #222;
+}
+
+.centerBlock__container {
+  text-align: center;
+}
+
+.centerBlock__text {
+  opacity: 0.8;
+  line-height: 1.7;
+}
+
+/* Responsive image height */
+@media (max-width: 900px) {
+  .hero__image {
+    height: 240px;
+  }
+}
