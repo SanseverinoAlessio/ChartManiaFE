@@ -34,6 +34,7 @@ AxiosClient.interceptors.request.use(
     if(isRefreshRequest)
       return config;
 
+
     const accessToken = JwtService.getAccessToken();
     if (accessToken != null)
       config.headers["Authorization"] = `Bearer ${accessToken}`;

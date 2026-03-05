@@ -4,8 +4,35 @@ import BarChart from "./Charts/BarChart/BarChart";
 import LineChart from "./Charts/LineChart/LineChart";
 import PieChart from "./Charts/PieChart/PieChart";
 
-function ChartFactory({ chartType, xAxisType, chartData, chartLabels }) {
+function ChartFactory({
+  chartRef,
+  chartType,
+  xAxisType,
+  chartData,
+  chartLabels,
+}) {
   //Adapt chart data
+
+  const whiteBackgroundPlugin = {
+    id: "whiteBackground",
+    beforeDraw: (chart, args, options) => {
+      const { ctx, width, height } = chart;
+      ctx.save();
+      ctx.globalCompositeOperation = "destination-over";
+      ctx.fillStyle = options?.color || "#ffffff";
+      ctx.fillRect(0, 0, width, height);
+      ctx.restore();
+    },
+  };
+
+  const options = {
+    responsive: true,
+    plugins: {
+      whiteBackground:  { color: '#ffffff' }
+    },
+  };
+
+
   function adaptData() {
     if (xAxisType == "string") {
       return {
@@ -19,7 +46,6 @@ function ChartFactory({ chartType, xAxisType, chartData, chartLabels }) {
         })),
       };
     }
-
 
     return {
       labels: [],
@@ -36,17 +62,16 @@ function ChartFactory({ chartType, xAxisType, chartData, chartLabels }) {
     };
   }
 
-  console.log(adaptData());
 
   switch (chartType) {
     case "bar":
-      return <BarChart configData={adaptData()} />;
+      return <BarChart plugins={[whiteBackgroundPlugin]} options={options} chartRef={chartRef} configData={adaptData()} />;
     case "scatter":
-      return <ScatterChart configData={adaptData()} />;
+      return <ScatterChart plugins={[whiteBackgroundPlugin]} options={options} chartRef={chartRef} configData={adaptData()} />;
     case "line":
-      return <LineChart configData={adaptData()} />;
+      return <LineChart plugins={[whiteBackgroundPlugin]} options={options} chartRef={chartRef} configData={adaptData()} />;
     case "pie":
-      return <PieChart configData={adaptData()}></PieChart>;
+      return <PieChart plugins={[whiteBackgroundPlugin]} options={options} chartRef={chartRef} configData={adaptData()}></PieChart>;
     default:
       return null;
   }

@@ -1,8 +1,7 @@
 import { Bar } from "react-chartjs-2";
 import { useRef } from "react";
-function BarChart({ configData }) {
-  const chartRef = useRef(null);
-  return <Bar ref={chartRef} data={configData}/>;
+function BarChart({ plugins,options,configData,chartRef }) {
+  return <Bar options={options} plugins={plugins} ref={chartRef} data={configData}/>;
 }
 
 export default BarChart;

@@ -105,7 +105,7 @@ function CategoricalInputTable({
   };
 
   return (
-    <TableContainer component={Paper} sx={{ mt: 2, overflowX: "auto" }}>
+    <TableContainer  component={Paper} sx={{ mt: 2, overflowX: "auto",maxHeight:"300px" }}>
       <Table size="small">
         <TableHead>
           <TableRow sx={{ bgcolor: "#f5f5f5" }}>

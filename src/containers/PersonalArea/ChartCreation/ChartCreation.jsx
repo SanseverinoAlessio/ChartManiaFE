@@ -1,17 +1,19 @@
-import { Box, Grid } from "@mui/material";
 import "./chart_creation.css";
 import { useEffect, useState } from "react";
-import ChartInputTable from "../../../components/ChartInputTable/ChartInputTable";
-import ChartFactory from "../../../components/ChartFactory";
 import { useParams } from "react-router";
 import { getChartTypeInfo } from "../../../helpers/ChartHelper";
 import { useNavigate } from "react-router";
-import CategoricalInputTable from "../../../components/CategoricalInputTable/CategoricalInputTable";
+import { ChartAdapter } from "../../../adapters/ChartAdapter";
+import ChartService from "../../../services/api/ChartService";
+import ChartForm from "../../../components/ChartForm/ChartForm";
 
 function ChartCreation() {
   const { chartType } = useParams();
   const chartTypeInfo = getChartTypeInfo(chartType);
   const navigate = useNavigate();
+  const [isSaving, setIsSaving] = useState(false);
+  const [chartTitle, setChartTitle] = useState("");
+
   useEffect(() => {
     if (chartTypeInfo == null) {
       return navigate("/personal-area/charts");
@@ -32,39 +34,40 @@ function ChartCreation() {
     },
   ]);
 
+  async function handleSave({ chartImage, chartLabels, chartData }) {
+    setIsSaving(true);
+    try {
+      const adaptedData = ChartAdapter.toPayload({
+        chartName: chartTitle,
+        chartType: chartType,
+        labels: chartLabels,
+        chartImage,
+        chartData,
+      });
+
+      await ChartService.createChart(adaptedData);
+      navigate("/personal-area/charts");
+    } catch (e) {
+      console.error(e);
+    } finally {
+      setIsSaving(false);
+    }
+  }
+
   return (
-    <>
-      <Box className="chart-creation">
-        <h2>Chart Creation</h2>
-        <Grid container>
-          <Grid size={12} height={400}>
-            <ChartFactory
-              chartData={chartData}
-              chartLabels={chartLabels}
-              xAxisType={chartTypeInfo.xAxisType}
-              chartType={chartType}
-            ></ChartFactory>
-          </Grid>
-          <Grid className="chart-input-table-container" size={12} height={400}>
-            {chartTypeInfo.xAxisType == "string" ? (
-              <CategoricalInputTable
-                chartLabels={chartLabels}
-                chartTypeInfo={chartTypeInfo}
-                setChartLabels={setChartLabels}
-                setChartData={setChartData}
-                chartData={chartData}
-              />
-            ) : (
-              <ChartInputTable
-                chartTypeInfo={chartTypeInfo}
-                chartData={chartData}
-                setChartData={setChartData}
-              ></ChartInputTable>
-            )}
-          </Grid>
-        </Grid>
-      </Box>
-    </>
+    <ChartForm
+      title="Chart Creation"
+      chartType={chartType}
+      chartTypeInfo={chartTypeInfo}
+      chartLabels={chartLabels}
+      setChartLabels={setChartLabels}
+      chartData={chartData}
+      setChartData={setChartData}
+      onSave={handleSave}
+      isSaving={isSaving}
+      chartTitle={chartTitle}
+      setChartTitle={setChartTitle}
+    />
   );
 }
 

@@ -1,17 +1,17 @@
 import { useRef } from "react";
 import { Scatter } from "react-chartjs-2";
 
-function ScatterChart({ configData }) {
-  const chartRef = useRef(null);
+function ScatterChart({ options, plugins, configData,chartRef }) {
   
-  const options = {
+  const customizedChartOptions = {...options,
+    ...{
     scales: {
       x: { type: "linear", position: "bottom" },
       y: { type: "linear" },
     },
-  };
+  }};
 
-  return <Scatter ref={chartRef} data={configData} options={options} />;
+  return <Scatter options={customizedChartOptions} plugins={plugins} ref={chartRef} data={configData}  />;
 }
 
 export default ScatterChart;

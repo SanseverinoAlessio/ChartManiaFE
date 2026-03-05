@@ -13,6 +13,7 @@ import DashBoard from "../containers/PersonalArea/DashBoard/DashBoard.jsx";
 import Charts from "../containers/PersonalArea/Charts/Charts.jsx";
 import Logout from "../containers/PersonalArea/Logout.jsx";
 import ChartSelection from "../containers/PersonalArea/ChartSelection/ChartSelection.jsx";
+import ChartEdit from "../containers/PersonalArea/ChartEdit/ChartEdit.jsx";
 
 function CustomRoutes() {
   const location = useLocation();
@@ -36,8 +37,8 @@ function CustomRoutes() {
               <Route path="" element={<DashBoard />}></Route>
               <Route path="charts" element={<Charts />}></Route>
               <Route path="chart/create" element={<ChartSelection />} />
-
               <Route path="chart/create/:chartType" element={<ChartCreation />} />
+              <Route path="chart/edit/:chartId" element={<ChartEdit />} />
             </Route>
 
             <Route path="" element={<ProtectedRoute />}>

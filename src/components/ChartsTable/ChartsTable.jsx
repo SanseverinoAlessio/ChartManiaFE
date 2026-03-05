@@ -19,6 +19,7 @@ function ChartsTable(props) {
     page: 0,
     pageSize: props.defaultPageSize || 10,
   });
+
   const [filterModel, setFilterModel] = useState({ item: [] });
   const [sortModel, setSortModel] = useState([]);
 
@@ -62,6 +63,26 @@ function ChartsTable(props) {
     });
   }
 
+  async function getChartImage(id) {
+    try {
+      let response = await ChartService.getChartImage(id);
+
+      const url = URL.createObjectURL(response);
+      window.open(url, "_blank", "noopener,noreferrer");
+      
+      setTimeout(() => URL.revokeObjectURL(url), 60_000);
+
+    } catch (e) {
+      console.error(e);
+      genericAlert.fire({
+        title: "Error",
+        text: "There was an error.",
+        icon: "error",
+      });
+      return;
+    }
+  }
+
   useEffect(() => {
     const controller = new AbortController();
     const fetchData = async () => {
@@ -76,8 +97,8 @@ function ChartsTable(props) {
           }
         );
 
-        setTotalItems(response.totalElements);
-        setRows(response.content);
+        setTotalItems(response.data.totalElements);
+        setRows(response.data.content);
       } catch (error) {
         console.error(error);
       }
@@ -110,13 +131,16 @@ function ChartsTable(props) {
         return (
           <>
             <ButtonGroup>
-              <Button>Mostra</Button>
+              <Button onClick={()=>{
+                  getChartImage(params.id);
+
+              }}>Show</Button>
               <Button
                 onClick={() => {
-                  navigate("personal-area/charts/edit/" + params.id);
+                  navigate("/personal-area/chart/edit/" + params.id);
                 }}
               >
-                Modifica
+                Edit
               </Button>
               <Button
                 onClick={() => {
@@ -124,7 +148,7 @@ function ChartsTable(props) {
                 }}
                 color="error"
               >
-                Elimina
+                Delete
               </Button>
             </ButtonGroup>
           </>

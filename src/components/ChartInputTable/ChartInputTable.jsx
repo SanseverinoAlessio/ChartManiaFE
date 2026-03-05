@@ -66,7 +66,7 @@ function ChartInputTable({ chartData, setChartData }) {
   };
 
   const handleValueChange = (datasetIndex, pointIndex, field, value) => {
-    console.log("prova", value);
+
     const updated = [...chartData];
     updated[datasetIndex].data[pointIndex][field] = value;
     setChartData(updated);
@@ -92,6 +92,7 @@ function ChartInputTable({ chartData, setChartData }) {
     <Box sx={{ width: "100%" }}>
       <Box
         sx={{
+     
           borderBottom: 1,
           borderColor: "divider",
           display: "flex",
