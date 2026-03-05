@@ -14,6 +14,10 @@ ChartMania is an application designed to help users generate beautiful, useful c
 - **Personal Area**: A dedicated user space.
 - **User Charts Table**: User can see their charts.
 - **Chart Deletion**: Users can **remove** charts from their personal collection.
-- **Chart Creation (Planned)**: Chart creation is **not implemented yet**. Work is in progress to enable users to create charts directly in the app.
+- **Chart Creation**: Users can **create** new charts.
+- **Chart Editing**: Users can **edit** existing charts.
+- **Chart Image**: Users can **export** charts as images.
+
+
 
 
