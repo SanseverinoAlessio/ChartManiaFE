@@ -27,11 +27,11 @@ function ChartFactory({
 
   const options = {
     responsive: true,
+    maintainAspectRatio: false,
     plugins: {
-      whiteBackground:  { color: '#ffffff' }
+      whiteBackground: { color: "#ffffff" },
     },
   };
-
 
   function adaptData() {
     if (xAxisType == "string") {
@@ -62,16 +62,43 @@ function ChartFactory({
     };
   }
 
-
   switch (chartType) {
     case "bar":
-      return <BarChart plugins={[whiteBackgroundPlugin]} options={options} chartRef={chartRef} configData={adaptData()} />;
+      return (
+        <BarChart
+          plugins={[whiteBackgroundPlugin]}
+          options={options}
+          chartRef={chartRef}
+          configData={adaptData()}
+        />
+      );
     case "scatter":
-      return <ScatterChart plugins={[whiteBackgroundPlugin]} options={options} chartRef={chartRef} configData={adaptData()} />;
+      return (
+        <ScatterChart
+          plugins={[whiteBackgroundPlugin]}
+          options={options}
+          chartRef={chartRef}
+          configData={adaptData()}
+        />
+      );
     case "line":
-      return <LineChart plugins={[whiteBackgroundPlugin]} options={options} chartRef={chartRef} configData={adaptData()} />;
+      return (
+        <LineChart
+          plugins={[whiteBackgroundPlugin]}
+          options={options}
+          chartRef={chartRef}
+          configData={adaptData()}
+        />
+      );
     case "pie":
-      return <PieChart plugins={[whiteBackgroundPlugin]} options={options} chartRef={chartRef} configData={adaptData()}></PieChart>;
+      return (
+        <PieChart
+          plugins={[whiteBackgroundPlugin]}
+          options={options}
+          chartRef={chartRef}
+          configData={adaptData()}
+        ></PieChart>
+      );
     default:
       return null;
   }

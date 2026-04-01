@@ -13,6 +13,18 @@
   --color-text: #242424;
   --body-background-color: "#ebebeb";
   --footer-background:#a6b2e7;
+  
+  /* Sidebar colors */
+  --sidebar-background: #407178;
+  --sidebar-text: #e8eae6;
+  --sidebar-title: white;
+  --sidebar-icon: #c8d94f;
+  --sidebar-avatar-bg: #d2e558;
+  --sidebar-avatar-text: #242424;
+  --sidebar-divider: rgba(232, 234, 230, 0.2);
+  --sidebar-hover: rgba(200, 217, 79, 0.12);
+  --sidebar-logout: #ff8a80;
+  --sidebar-logout-hover: rgba(255, 138, 128, 0.12);
 }
 
 body {

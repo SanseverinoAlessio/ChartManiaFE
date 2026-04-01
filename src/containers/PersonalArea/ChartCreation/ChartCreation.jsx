@@ -6,6 +6,8 @@ import { useNavigate } from "react-router";
 import { ChartAdapter } from "../../../adapters/ChartAdapter";
 import ChartService from "../../../services/api/ChartService";
 import ChartForm from "../../../components/ChartForm/ChartForm";
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
 
 function ChartCreation() {
   const { chartType } = useParams();
@@ -13,6 +15,7 @@ function ChartCreation() {
   const navigate = useNavigate();
   const [isSaving, setIsSaving] = useState(false);
   const [chartTitle, setChartTitle] = useState("");
+  const genericAlert = withReactContent(Swal);
 
   useEffect(() => {
     if (chartTypeInfo == null) {
@@ -35,6 +38,16 @@ function ChartCreation() {
   ]);
 
   async function handleSave({ chartImage, chartLabels, chartData }) {
+    if (chartTitle == "") {
+      genericAlert.fire({
+        title: "Error",
+        text: "You should insert a title.",
+        icon: "error",
+      });
+
+      return;
+    }
+
     setIsSaving(true);
     try {
       const adaptedData = ChartAdapter.toPayload({

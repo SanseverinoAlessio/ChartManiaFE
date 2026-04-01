@@ -12,13 +12,18 @@ function ChartSelection() {
 
   return (
     <>
-      <div style={{ paddingLeft: "10px",marginTop:"20px" }}>
+      <div style={{ paddingLeft: "10px",marginTop:"20px",marginRight:"20px" }}>
         <Grid container spacing={3}>
           {CHART_TYPES.map((el) => (
-            <Grid key={el.chartType} size={4}>
+            <Grid key={el.chartType} size={{sm:12, md: 6, lg:4}}>
               <Card className="charts">
+                <img
+                  src={el.preview}
+                  alt={`${el.label} preview`}
+                  className="chart-preview"
+                />
                 <h3>{el.label}</h3>
-                <Button onClick={()=>{createOne(el.chartType)}} variant="contained">Create one</Button>
+                <Button color="info" onClick={()=>{createOne(el.chartType)}} variant="contained">Create one</Button>
               </Card>
             </Grid>
           ))}

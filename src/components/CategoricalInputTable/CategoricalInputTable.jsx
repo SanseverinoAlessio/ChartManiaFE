@@ -133,6 +133,7 @@ function CategoricalInputTable({
                   
                   {isDatasetLevel && (
                     <ColorPicker
+                    offset={10}
                       color={ds.data[0]?.color || "#f44040"}
                       setColor={(newColor) => handleDatasetColorChange(idx, newColor)}
                     />

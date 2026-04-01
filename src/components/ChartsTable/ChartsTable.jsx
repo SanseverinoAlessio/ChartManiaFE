@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import ChartService from "../../services/api/ChartService";
 import { DataGrid } from "@mui/x-data-grid";
-import { Button, Paper } from "@mui/material";
+import { Box, Button, Paper } from "@mui/material";
 import { ButtonGroup } from "@mui/material";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
@@ -12,7 +12,7 @@ function ChartsTable(props) {
   const [rows, setRows] = useState([]);
   const [totalItems, setTotalItems] = useState(0);
   const filterOperators = getGridStringOperators().filter(({ value }) =>
-    ["contains"].includes(value)
+    ["contains"].includes(value),
   );
 
   const [paginationModel, setPaginationModel] = useState({
@@ -69,9 +69,8 @@ function ChartsTable(props) {
 
       const url = URL.createObjectURL(response);
       window.open(url, "_blank", "noopener,noreferrer");
-      
-      setTimeout(() => URL.revokeObjectURL(url), 60_000);
 
+      setTimeout(() => URL.revokeObjectURL(url), 60_000);
     } catch (e) {
       console.error(e);
       genericAlert.fire({
@@ -94,7 +93,7 @@ function ChartsTable(props) {
           sortModel,
           {
             signal: controller.signal,
-          }
+          },
         );
 
         setTotalItems(response.data.totalElements);
@@ -115,11 +114,13 @@ function ChartsTable(props) {
       field: "name",
       headerName: "Name",
       flex: 1,
+
       filterOperators: filterOperators,
     },
     {
       field: "type",
       headerName: "Type",
+
       flex: 1,
       filterOperators: filterOperators,
     },
@@ -127,15 +128,23 @@ function ChartsTable(props) {
       field: "actions",
       filterable: false,
       sortable: false,
+
       renderCell: (params) => {
         return (
           <>
-            <ButtonGroup>
-              <Button onClick={()=>{
-                  getChartImage(params.id);
-
-              }}>Show</Button>
+            <div sx={{ display: "flex", flexWrap: "wrap" }}>
               <Button
+                variant="outlined"
+                sx={{ marginBottom: "5px", marginLeft: "3px" }}
+                onClick={() => {
+                  getChartImage(params.id);
+                }}
+              >
+                Show
+              </Button>
+              <Button
+                variant="outlined"
+                sx={{ marginBottom: "5px", marginLeft: "3px" }}
                 onClick={() => {
                   navigate("/personal-area/chart/edit/" + params.id);
                 }}
@@ -143,6 +152,8 @@ function ChartsTable(props) {
                 Edit
               </Button>
               <Button
+                variant="outlined"
+                sx={{ marginBottom: "5px", marginLeft: "3px" }}
                 onClick={() => {
                   deleteItem(params.id);
                 }}
@@ -150,34 +161,44 @@ function ChartsTable(props) {
               >
                 Delete
               </Button>
-            </ButtonGroup>
+            </div>
           </>
         );
       },
+
       headerName: "Actions",
       flex: 1,
     },
   ];
 
   return (
-    <>
-      <div style={{ height: "calc(100vh - 5px)" }}>
-        <DataGrid
-          disableRowSelectionOnClick={true}
-          rows={rows}
-          rowCount={totalItems}
-          columns={columns}
-          paginationModel={paginationModel}
-          sortingMode="server"
-          filterMode="server"
-          paginationMode="server"
-          pageSizeOptions={[5, 10, 25, 50]}
-          onPaginationModelChange={setPaginationModel}
-          onSortModelChange={setSortModel}
-          onFilterModelChange={setFilterModel}
-        />
-      </div>
-    </>
+    <div style={{ height: "calc(100vh - 5px)" }}>
+      <DataGrid
+        sx={{
+          "& .MuiDataGrid-row": {
+            minHeight: "38px !important",
+          },
+
+          "& .MuiDataGrid-cell": {
+            alignItems: "center",
+            display: "flex",
+          },
+        }}
+        getRowHeight={() => "auto"}
+        disableRowSelectionOnClick={true}
+        rows={rows}
+        rowCount={totalItems}
+        columns={columns}
+        paginationModel={paginationModel}
+        sortingMode="server"
+        filterMode="server"
+        paginationMode="server"
+        pageSizeOptions={[5, 10, 25, 50]}
+        onPaginationModelChange={setPaginationModel}
+        onSortModelChange={setSortModel}
+        onFilterModelChange={setFilterModel}
+      />
+    </div>
   );
 }
 

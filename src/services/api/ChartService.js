@@ -32,7 +32,7 @@ class ChartService {
 
   static async createChart(chartData) {
     const { data } = await AxiosClient.post(
-      "personal-area/chart/create",
+      "personal-area/charts/create",
       chartData,
     );
     return data;
@@ -40,20 +40,20 @@ class ChartService {
 
   static async updateChart(chartId, chartData) {
     const { data } = await AxiosClient.put(
-      "personal-area/chart/" + chartId,
+      "personal-area/charts/" + chartId,
       chartData,
     );
     return data;
   }
 
   static async deleteItem(id) {
-    const { data } = await AxiosClient.delete("personal-area/chart/" + id);
+    const { data } = await AxiosClient.delete("personal-area/charts/" + id);
     return data;
   }
 
   static async getChartImage(id) {
     const { data } = await AxiosClient.get(
-      "personal-area/chart/" + id + "/image",
+      "personal-area/charts/" + id + "/image",
       {
         responseType: "blob",
       },
@@ -62,7 +62,7 @@ class ChartService {
   }
 
   static async getChart(id) {
-    const { data } = await AxiosClient.get("personal-area/chart/" + id);
+    const { data } = await AxiosClient.get("personal-area/charts/" + id);
     return data;
   }
 }

@@ -1,11 +1,20 @@
 import { SketchPicker } from "react-color";
 import { Button, Box } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useRef } from "react";
 
-function ColorPicker({ color, setColor }) {
+function ColorPicker({ color, setColor, offset = 1 }) {
+  let buttonRef = useRef(0);
   const [displayColorPicker, setDisplayColorPicker] = useState(false);
+  const [top,setTop] = useState(0);
+  const [left, setleft] = useState(0);
 
   const toggleColorPicker = () => {
+    let y = buttonRef.current.getBoundingClientRect().bottom + window.scrollY;
+    let x = buttonRef.current.getBoundingClientRect().left + window.scrollX;
+    setTop(y);
+    setleft(x);
+
     setDisplayColorPicker((prev) => !prev);
   };
 
@@ -18,32 +27,14 @@ function ColorPicker({ color, setColor }) {
   };
 
   return (
-    <Box sx={{ position: "relative", display: "inline-block" }}>
-      <Button
-        variant="contained"
-        onClick={toggleColorPicker}
-        sx={{
-          backgroundColor: color,
-          color: "white",
-          minWidth: "120px",
-          textShadow: "0px 0px 4px rgba(0,0,0,0.5)",
-          "&:hover": {
-            backgroundColor: color,
-            filter: "brightness(0.9)",
-          },
-        }}
-      >
-        {color}
-      </Button>
-
+    <>
       {displayColorPicker && (
         <Box
           sx={{
             position: "absolute",
             zIndex: 10,
-            top: "100%",
-            left: 0,
-            mt: 1,
+            top: top,
+            left:left
           }}
         >
           <Box
@@ -56,14 +47,34 @@ function ColorPicker({ color, setColor }) {
               left: 0,
             }}
           />
-          <SketchPicker 
-            color={color} 
-            onChange={handleChange} 
+          <SketchPicker
+            color={color}
+            onChange={handleChange}
             disableAlpha={true}
           />
         </Box>
       )}
-    </Box>
+
+      <Box sx={{ position: "relative", display: "inline-block" }}>
+        <Button
+          ref={buttonRef}
+          variant="contained"
+          onClick={toggleColorPicker}
+          sx={{
+            backgroundColor: color,
+            color: "white",
+            minWidth: "120px",
+            textShadow: "0px 0px 4px rgba(0,0,0,0.5)",
+            "&:hover": {
+              backgroundColor: color,
+              filter: "brightness(0.9)",
+            },
+          }}
+        >
+          {color}
+        </Button>
+      </Box>
+    </>
   );
 }
 
