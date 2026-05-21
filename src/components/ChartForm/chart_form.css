@@ -1,6 +1,14 @@
 .chart-creation {
   padding: 50px 40px 40px 40px;
-  min-height: 100vh;
+ 
+}
+
+.chart-layout-container {
+  align-items: flex-start;
+}
+
+.open-sidebar-action {
+  margin-bottom: 12px;
 }
 
 .table-wrapper {
@@ -9,30 +17,73 @@
 
 .chart-input-table-container {
   margin-top: 15px;
+  overflow: auto;
+  flex: 1;
+  min-height: 0;
 }
 
 .chart-factory-container {
-  height: 260px;
+  max-height: calc(100vh - 210px);
+
 }
 
 .chart-factory-container canvas {
   height: 100% !important;
 }
 
+.chart-sidebar-container {
+  position: sticky;
+  top: 16px;
+  max-height: calc(100vh - 90px);
+  display: flex;
+  flex-direction: column;
+  padding: 16px;
+  border: 1px solid #d8d8d8;
+  border-radius: 12px;
+  background-color: #ffffff;
+}
+
+.chart-sidebar-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.chart-sidebar-actions button {
+  white-space: nowrap;
+}
+
 @media (min-width: 600px) {
   .chart-factory-container {
-    height: 320px;
+    height: 560px;
   }
 }
 
 @media (min-width: 900px) {
   .chart-factory-container {
-    height: 380px;
+    height: 620px;
   }
 }
 
 @media (min-width: 1200px) {
   .chart-factory-container {
-    height: 460px;
+    height: 680px;
+  }
+}
+
+@media (max-width: 899px) {
+  .chart-creation {
+    padding: 20px 16px 24px 16px;
+  }
+
+  .chart-factory-container {
+    height: 360px;
+  }
+
+  .chart-sidebar-container {
+    position: static;
+    max-height: none;
   }
 }

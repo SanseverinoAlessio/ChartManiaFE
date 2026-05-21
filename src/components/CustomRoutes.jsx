@@ -18,6 +18,7 @@ import ChartEdit from "../containers/PersonalArea/ChartEdit/ChartEdit.jsx";
 import EditProfile from "../containers/PersonalArea/EditProfile/EditProfile.jsx";
 import { useEffect, useState } from "react";
 import { Toolbar, useMediaQuery } from "@mui/material";
+import { ChartInputSidebarProvider } from "../contexts/ChartInputSidebarContext.jsx";
 
 function CustomRoutes() {
   const location = useLocation();
@@ -30,7 +31,7 @@ function CustomRoutes() {
   }, [isMobile]);
 
   return (
-    <>
+    <ChartInputSidebarProvider>
       {!isPersonalArea && <Navbar />}
       {isPersonalArea && (
         <PersonalAreaTopBar
@@ -78,7 +79,7 @@ function CustomRoutes() {
           {!isPersonalArea && <Footer />}
         </main>
       </div>
-    </>
+    </ChartInputSidebarProvider>
   );
 }
 

@@ -28,6 +28,7 @@ function ChartFactory({
   const options = {
     responsive: true,
     maintainAspectRatio: false,
+ 
     plugins: {
       whiteBackground: { color: "#ffffff" },
     },
@@ -66,6 +67,7 @@ function ChartFactory({
     case "bar":
       return (
         <BarChart
+
           plugins={[whiteBackgroundPlugin]}
           options={options}
           chartRef={chartRef}

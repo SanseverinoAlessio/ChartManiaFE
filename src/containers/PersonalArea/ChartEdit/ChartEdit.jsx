@@ -18,7 +18,6 @@ export default function ChartEdit() {
   const [chartTypeInfo, setChartTypeInfo] = useState(null);
   const [chartTitle, setChartTitle] = useState("");
   const genericAlert = withReactContent(Swal);
-  
 
   useEffect(() => {
     async function loadChartData() {
