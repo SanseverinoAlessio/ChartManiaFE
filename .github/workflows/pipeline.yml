@@ -1,0 +1,40 @@
+name: Pipeline
+
+on:
+  push:
+    branches:
+      - main
+
+    build-push:
+    runs-on: ubuntu-latest
+    needs: test
+
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - name: Checkout codice
+        uses: actions/checkout@v4
+
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v4
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      -  name: "Convert Case Repository Owner"
+         run: |
+          REPOSITORY_OWNER="${{github.repository_owner}}"
+          REPOSITORY_OWNER_LOWER=$(echo "$REPOSITORY_OWNER" | tr '[:upper:]' '[:lower:]')
+          echo "REPOSITORY_OWNER_LOWER=$REPOSITORY_OWNER_LOWER" >> "$GITHUB_ENV"   
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v6     
+        with:
+          context: .
+          push: true
+          tags: |
+            ghcr.io/${{ env.REPOSITORY_OWNER_LOWER }}/chartmania-frontend:latest
+            ghcr.io/${{ env.REPOSITORY_OWNER_LOWER }}/chartmania-frontend:${{ github.sha }}
