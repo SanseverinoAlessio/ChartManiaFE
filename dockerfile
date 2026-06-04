@@ -18,6 +18,7 @@ FROM nginx:alpine
 RUN apk add --no-cache dos2unix
 
 COPY --from=build /app/dist /usr/share/nginx/html
+COPY nginx.conf /etc/nginx/conf.d/default.conf
 
 COPY env.sh /docker-entrypoint.d/40-env.sh
 RUN dos2unix /docker-entrypoint.d/40-env.sh
